@@ -14,44 +14,56 @@
   }
 </script>
 
-<div class="overflow-x-auto">
-  <table class="w-full border-collapse">
-    <thead>
-      <tr class="bg-slate-100 text-slate-800">
-        <th class="p-3 text-left text-sm font-semibold">ID</th>
-        <th class="p-3 text-left text-sm font-semibold">Nome</th>
-        <th class="p-3 text-left text-sm font-semibold">Matrícula</th>
-        <th class="p-3 text-left text-sm font-semibold">Curso</th>
-        <th class="p-3 text-center text-sm font-semibold">Ações</th>
+<div class="card overflow-hidden bg-white rounded-lg shadow border border-slate-200">
+  <table class="w-full">
+    <thead class="bg-slate-100">
+      <tr>
+        <th class="text-left px-6 py-4 border-b border-slate-200 text-slate-700">
+          ID
+        </th>
+        <th class="text-left px-6 py-4 border-b border-slate-200 text-slate-700">
+          Nome
+        </th>
+        <th class="text-left px-6 py-4 border-b border-slate-200 text-slate-700">
+          Matrícula
+        </th>
+        <th class="text-left px-6 py-4 border-b border-slate-200 text-slate-700">
+          Curso
+        </th>
+        <th class="text-center px-6 py-4 border-b border-slate-200 text-slate-700">
+          Ações
+        </th>
       </tr>
     </thead>
     <tbody>
       {#each alunos as aluno}
-        <tr class="border-t border-slate-200 hover:bg-slate-50 transition">
-          <td class="p-3 text-sm text-slate-800">{aluno.id}</td>
-          <td class="p-3 text-sm text-slate-800">{aluno.nome}</td>
-          <td class="p-3 text-sm text-slate-800">{aluno.matricula}</td>
-          <td class="p-3 text-sm text-slate-800">
+        <tr class="border-b border-slate-200 hover:bg-slate-50 text-slate-800">
+          <td class="px-6 py-4">{aluno.id}</td>
+          <td class="px-6 py-4 font-medium">{aluno.nome}</td>
+          <td class="px-6 py-4">{aluno.matricula}</td>
+          <td class="px-6 py-4">
             {aluno.curso?.nome || aluno.curso || "-"}
           </td>
-          <td class="p-3 text-center">
-            <button
-              on:click={() => editar(aluno)}
-              class="text-blue-600 hover:text-blue-800 hover:underline mr-3 text-sm"
-            >
-              Editar
-            </button>
-            <button
-              on:click={() => excluir(aluno.id)}
-              class="text-red-600 hover:text-red-800 hover:underline text-sm"
-            >
-              Excluir
-            </button>
+          <td class="px-6 py-4">
+            <div class="flex justify-center gap-2">
+              <button
+                on:click={() => editar(aluno)}
+                class="px-3 py-2 bg-slate-200 text-slate-800 rounded-lg hover:bg-slate-300"
+              >
+                Editar
+              </button>
+              <button
+                on:click={() => excluir(aluno.id)}
+                class="px-3 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700"
+              >
+                Excluir
+              </button>
+            </div>
           </td>
         </tr>
       {:else}
         <tr>
-          <td colspan="5" class="p-6 text-center text-slate-500">
+          <td colspan="5" class="px-6 py-4 text-center text-slate-500">
             Nenhum aluno cadastrado.
           </td>
         </tr>
