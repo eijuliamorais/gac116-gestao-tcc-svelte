@@ -32,14 +32,14 @@
         {titles[$navigation]}
       </h1>
 
-      <p class="text-slate-500 mt-1">
+      <p class="text-slate-700 mt-2">
         {descriptions[$navigation]}
       </p>
 
     </div>
 
     <div
-      class="bg-slate-100 px-4 py-2 rounded-xl text-sm text-slate-600"
+      class="bg-slate-100 text-slate-700 px-4 py-2 rounded-xl text-sm font-medium"
     >
       Gestão de TCCs
     </div>

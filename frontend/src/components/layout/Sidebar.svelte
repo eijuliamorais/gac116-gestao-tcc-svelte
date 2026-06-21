@@ -2,41 +2,13 @@
   import { navigation } from "../../stores/navigation";
 
   const menu = [
-    {
-      id: "dashboard",
-      label: "Dashboard",
-      icon: "📊"
-    },
-    {
-      id: "alunos",
-      label: "Alunos",
-      icon: "🎓"
-    },
-    {
-      id: "professores",
-      label: "Professores",
-      icon: "👨‍🏫"
-    },
-    {
-      id: "cursos",
-      label: "Cursos",
-      icon: "📚"
-    },
-    {
-      id: "departamentos",
-      label: "Departamentos",
-      icon: "🏢"
-    },
-    {
-      id: "unidades",
-      label: "Unidades",
-      icon: "🏛️"
-    },
-    {
-      id: "tccs",
-      label: "TCCs",
-      icon: "📄"
-    }
+    { id: "dashboard", label: "Dashboard" },
+    { id: "alunos", label: "Alunos" },
+    { id: "professores", label: "Professores" },
+    { id: "cursos", label: "Cursos" },
+    { id: "departamentos", label: "Departamentos" },
+    { id: "unidades", label: "Unidades Acadêmicas" },
+    { id: "tccs", label: "TCCs" }
   ];
 
   function navegar(page) {
@@ -46,7 +18,7 @@
 
 <aside class="w-72 bg-slate-900 text-white min-h-screen flex flex-col">
 
-  <div class="px-6 py-8 border-b border-slate-800">
+  <div class="px-8 py-8 border-b border-slate-800">
 
     <h1 class="text-2xl font-bold">
       Gestão TCC
@@ -66,15 +38,14 @@
 
         <button
           on:click={() => navegar(item.id)}
-          class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-left hover:bg-slate-800 transition-all duration-200"
+          class:selected={$navigation === item.id}
+          class="w-full text-left px-5 py-4 rounded-xl transition-all duration-200 hover:bg-slate-800"
         >
-          <span class="text-lg">
-            {item.icon}
-          </span>
 
           <span class="font-medium">
             {item.label}
           </span>
+
         </button>
 
       {/each}
@@ -100,3 +71,9 @@
   </div>
 
 </aside>
+
+<style>
+  .selected {
+    background: rgb(30 41 59);
+  }
+</style>

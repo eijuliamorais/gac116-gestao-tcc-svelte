@@ -1,15 +1,17 @@
 <script>
-  let { title, value } = $props();
+  export let title = "";
+  export let value = 0;
+  export let color = "slate";
 </script>
 
-<div class="bg-white rounded-2xl shadow-sm p-6">
+<div class={`rounded-2xl p-6 shadow-md border bg-white`}>
 
-  <p class="text-slate-500 text-sm">
+  <p class="text-slate-600 text-sm font-medium">
     {title}
   </p>
 
-  <h2 class="text-4xl font-bold text-slate-900 mt-3">
+  <h3 class="text-4xl font-bold text-slate-900 mt-3">
     {value}
-  </h2>
+  </h3>
 
 </div>

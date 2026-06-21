@@ -2,6 +2,8 @@
   import { onMount } from "svelte";
 
   import StatCard from "../components/dashboard/StatCard.svelte";
+  import StatusChart from "../components/dashboard/StatusChart.svelte";
+  import OrientadorChart from "../components/dashboard/OrientadorChart.svelte";
 
   import { getEstatisticas } from "../services/dashboardService";
 
@@ -25,7 +27,7 @@
 
 {#if loading}
 
-  <div class="text-center py-10">
+  <div class="text-center py-10 text-secondary">
     Carregando dashboard...
   </div>
 
@@ -35,11 +37,11 @@
 
     <div>
 
-      <h2 class="text-2xl font-bold text-slate-900">
+      <h2 class="page-title">
         Visão Geral
       </h2>
 
-      <p class="text-slate-500">
+      <p class="page-subtitle">
         Estatísticas dos TCCs cadastrados
       </p>
 
@@ -69,23 +71,98 @@
 
     </div>
 
-    <div class="bg-white rounded-2xl shadow-sm p-6">
+    <div class="card p-6">
 
-      <h3 class="text-xl font-semibold mb-4">
+      <h3 class="title text-2xl mb-6">
+        Resumo Geral
+      </h3>
+
+      <div class="grid md:grid-cols-3 gap-6">
+
+        <div>
+
+          <p class="text-slate-600">
+            Total de Trabalhos
+          </p>
+
+          <h4 class="text-3xl font-bold text-slate-900">
+            {stats.total_geral}
+          </h4>
+
+        </div>
+
+        <div>
+
+          <p class="text-slate-600">
+            Orientadores Ativos
+          </p>
+
+          <h4 class="text-3xl font-bold text-slate-900">
+            {Object.keys(stats.por_orientador || {}).length}
+          </h4>
+
+        </div>
+
+        <div>
+
+          <p class="text-slate-600">
+            Status Diferentes
+          </p>
+
+          <h4 class="text-3xl font-bold text-slate-900">
+            {Object.keys(stats.por_status || {}).length}
+          </h4>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="grid grid-cols-1 xl:grid-cols-2 gap-6">
+
+      <StatusChart
+        dados={stats.por_status}
+      />
+
+      <OrientadorChart
+        dados={stats.por_orientador}
+      />
+
+    </div>
+
+    <div class="card p-6">
+
+      <h3 class="title text-2xl mb-6">
         Orientadores
       </h3>
 
-      <div class="space-y-3">
+      <div class="space-y-4">
 
         {#each Object.entries(stats.por_orientador || {}) as [nome, quantidade]}
 
-          <div class="flex justify-between border-b pb-2">
+          <div>
 
-            <span>{nome}</span>
+            <div class="flex justify-between mb-2">
 
-            <span class="font-semibold">
-              {quantidade}
-            </span>
+              <span class="text-slate-800 font-medium">
+                {nome}
+              </span>
+
+              <span class="font-bold text-slate-900">
+                {quantidade}
+              </span>
+
+            </div>
+
+            <div class="w-full bg-slate-200 rounded-full h-2">
+
+              <div
+                class="bg-slate-900 h-2 rounded-full"
+                style={`width:${(quantidade / stats.total_geral) * 100}%`}
+              ></div>
+
+            </div>
 
           </div>
 
