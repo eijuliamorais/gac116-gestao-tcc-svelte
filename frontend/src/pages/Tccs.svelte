@@ -1,24 +1,38 @@
 <script>
   import { onMount } from "svelte";
-  import {
-    listarTccs,
-    criarTcc,
-    atualizarTcc,
-    excluirTcc,
-  } from "../services/tccsService";
+  
+  import { listarTccs, criarTcc, atualizarTcc, excluirTcc } from "../services/tccsService";
+  import { listarAlunos } from "../services/alunosService";
+  import { listarProfessores } from "../services/professoresService";
+  
   import TccsTable from "../components/tables/TccsTable.svelte";
   import TccModal from "../components/modals/TccModal.svelte";
 
   let tccs = [];
+  let alunos = [];
+  let profesores = [];
   let busca = "";
+  
   let modalAberto = false;
   let tccSelecionado = null;
 
   async function carregarDados() {
     try {
-      tccs = await listarTccs();
+      tccs = await listarTccs() || [];
     } catch (error) {
       console.error("Erro ao carregar TCCs:", error);
+    }
+
+    try {
+      alunos = await listarAlunos() || [];
+    } catch (error) {
+      console.error("Erro ao carregar alunos:", error);
+    }
+
+    try {
+      profesores = await listarProfessores() || [];
+    } catch (error) {
+      console.error("Erro ao carregar professores:", error);
     }
   }
 
@@ -36,18 +50,20 @@
 
   async function salvarTcc(event) {
     try {
-      const formData = event.detail; // O modal emite o FormData
+      const formData = event.detail;
+      
       if (tccSelecionado) {
         await atualizarTcc(tccSelecionado.id, formData);
       } else {
         await criarTcc(formData);
       }
+      
       modalAberto = false;
       tccSelecionado = null;
       await carregarDados();
     } catch (error) {
-      console.error("Erro ao salvar TCC:", error);
-      alert("Erro ao salvar TCC. Verifique os dados e tente novamente.");
+      console.error(error);
+      alert("Erro ao salvar TCC. Verifique os campos preenchidos.");
     }
   }
 
@@ -60,7 +76,7 @@
       await excluirTcc(id);
       await carregarDados();
     } catch (error) {
-      console.error("Erro ao excluir TCC:", error);
+      console.error(error);
       alert("Erro ao excluir TCC.");
     }
   }
@@ -70,22 +86,22 @@
     tccSelecionado = null;
   }
 
-  // Filtra por título ou nome do aluno
-  $: tccsFiltrados = tccs.filter(
-    (tcc) =>
-      tcc.titulo.toLowerCase().includes(busca.toLowerCase()) ||
-      (tcc.aluno?.nome || "").toLowerCase().includes(busca.toLowerCase())
-  );
+  $: tccsFiltrados = tccs.filter((tcc) => {
+    const termo = busca.toLowerCase();
+    const matchTitulo = (tcc.titulo || "").toLowerCase().includes(termo);
+    
+    const aluno = alunos.find(a => a.id === Number(tcc.aluno));
+    const matchAluno = aluno?.nome ? aluno.nome.toLowerCase().includes(termo) : false;
+
+    return matchTitulo || matchAluno;
+  });
 </script>
 
 <div class="space-y-6">
-  <!-- Cabeçalho -->
   <div class="flex justify-between items-center">
     <div>
       <h2 class="text-3xl font-bold text-slate-900">TCCs</h2>
-      <p class="text-slate-700">
-        Gerenciamento de Trabalhos de Conclusão de Curso
-      </p>
+      <p class="text-slate-700">Gerenciamento de Trabalhos de Conclusão de Curso</p>
     </div>
     <button
       on:click={novoTcc}
@@ -95,7 +111,6 @@
     </button>
   </div>
 
-  <!-- Busca -->
   <div class="card p-5">
     <input
       bind:value={busca}
@@ -105,15 +120,15 @@
     />
   </div>
 
-  <!-- Tabela -->
   <TccsTable
     tccs={tccsFiltrados}
+    {alunos}
+    professores={profesores}
     on:editar={editarTcc}
     on:excluir={removerTcc}
   />
 </div>
 
-<!-- Modal -->
 <TccModal
   open={modalAberto}
   tcc={tccSelecionado}
