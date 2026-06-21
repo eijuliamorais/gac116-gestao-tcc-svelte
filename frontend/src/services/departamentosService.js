@@ -5,6 +5,11 @@ export async function listarDepartamentos() {
   return response.data;
 }
 
+export async function buscarDepartamento(id) {
+  const response = await api.get(`/departamentos/${id}/`);
+  return response.data;
+}
+
 export async function criarDepartamento(dados) {
   const response = await api.post("/departamentos/", dados);
   return response.data;
