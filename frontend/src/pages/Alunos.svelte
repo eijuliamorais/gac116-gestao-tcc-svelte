@@ -1,15 +1,17 @@
 <script>
   import { onMount } from "svelte";
   import { listarAlunos, criarAluno, atualizarAluno, excluirAluno } from "../services/alunosService";
+  import { listarCursos } from "../services/cursosService";
   import AlunosTable from "../components/tables/AlunosTable.svelte";
   import AlunoModal from "../components/modals/AlunoModal.svelte";
 
   let alunos = [];
+  let cursos = [];
   let busca = "";
   let modalAberto = false;
   let alunoSelecionado = null;
 
-  async function carregarDados() {
+  async function carregarAlunos() {
     try {
       alunos = await listarAlunos();
     } catch (error) {
@@ -17,7 +19,18 @@
     }
   }
 
-  onMount(carregarDados);
+  async function carregarCursos() {
+    try {
+      cursos = await listarCursos();
+    } catch (error) {
+      console.error("Erro ao carregar cursos:", error);
+    }
+  }
+
+  // Carrega ambos ao montar
+  onMount(async () => {
+    await Promise.all([carregarAlunos(), carregarCursos()]);
+  });
 
   function novoAluno() {
     alunoSelecionado = null;
@@ -39,7 +52,7 @@
       }
       modalAberto = false;
       alunoSelecionado = null;
-      await carregarDados();
+      await carregarAlunos(); // recarrega a lista
     } catch (error) {
       console.error("Erro ao salvar aluno:", error);
       alert("Erro ao salvar aluno. Verifique os dados e tente novamente.");
@@ -53,7 +66,7 @@
 
     try {
       await excluirAluno(id);
-      await carregarDados();
+      await carregarAlunos();
     } catch (error) {
       console.error("Erro ao excluir aluno:", error);
       alert("Erro ao excluir aluno.");
@@ -101,6 +114,7 @@
   <!-- Tabela -->
   <AlunosTable
     alunos={alunosFiltrados}
+    cursos={cursos}
     on:editar={editarAluno}
     on:excluir={removerAluno}
   />
