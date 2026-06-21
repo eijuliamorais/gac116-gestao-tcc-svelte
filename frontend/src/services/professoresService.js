@@ -11,15 +11,25 @@ export async function buscarProfessor(id) {
 }
 
 export async function criarProfessor(dados) {
-  const response = await api.post("/professores/", dados);
+  const response = await api.post(
+    "/professores/",
+    dados
+  );
+
   return response.data;
 }
 
 export async function atualizarProfessor(id, dados) {
-  const response = await api.put(`/professores/${id}/`, dados);
+  const response = await api.put(
+    `/professores/${id}/`,
+    dados
+  );
+
   return response.data;
 }
 
 export async function excluirProfessor(id) {
-  await api.delete(`/professores/${id}/`);
+  await api.delete(
+    `/professores/${id}/`
+  );
 }
