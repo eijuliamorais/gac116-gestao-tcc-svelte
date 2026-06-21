@@ -5,6 +5,11 @@ export async function listarCursos() {
   return response.data;
 }
 
+export async function buscarCurso(id) {
+  const response = await api.get(`/cursos/${id}/`);
+  return response.data;
+}
+
 export async function criarCurso(dados) {
   const response = await api.post("/cursos/", dados);
   return response.data;

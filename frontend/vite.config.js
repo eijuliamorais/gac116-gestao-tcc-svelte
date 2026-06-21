@@ -6,5 +6,13 @@ export default defineConfig({
   plugins: [
     svelte(),
     tailwindcss()
-  ]
+  ],
+  server: {
+    host: true,
+    port: 5173,
+    strictPort: true,
+    hmr: {
+      clientPort: 5173
+    }
+  }
 })
