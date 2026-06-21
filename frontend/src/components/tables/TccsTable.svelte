@@ -40,38 +40,52 @@
   }
 </script>
 
-<div class="overflow-x-auto">
-  <table class="w-full border-collapse">
-    <thead>
-      <tr class="bg-slate-100 text-slate-800">
-        <th class="p-3 text-left text-sm font-semibold">ID</th>
-        <th class="p-3 text-left text-sm font-semibold">Título</th>
-        <th class="p-3 text-left text-sm font-semibold">Aluno</th>
-        <th class="p-3 text-left text-sm font-semibold">Orientador</th>
-        <th class="p-3 text-left text-sm font-semibold">Status</th>
-        <th class="p-3 text-left text-sm font-semibold">Arquivo</th>
-        <th class="p-3 text-center text-sm font-semibold">Ações</th>
+<div class="card overflow-hidden bg-white rounded-lg shadow border border-slate-200">
+  <table class="w-full">
+    <thead class="bg-slate-100">
+      <tr>
+        <th class="text-left px-6 py-4 border-b border-slate-200 text-slate-700">
+          ID
+        </th>
+        <th class="text-left px-6 py-4 border-b border-slate-200 text-slate-700">
+          Título
+        </th>
+        <th class="text-left px-6 py-4 border-b border-slate-200 text-slate-700">
+          Aluno
+        </th>
+        <th class="text-left px-6 py-4 border-b border-slate-200 text-slate-700">
+          Orientador
+        </th>
+        <th class="text-left px-6 py-4 border-b border-slate-200 text-slate-700">
+          Status
+        </th>
+        <th class="text-left px-6 py-4 border-b border-slate-200 text-slate-700">
+          Arquivo
+        </th>
+        <th class="text-center px-6 py-4 border-b border-slate-200 text-slate-700">
+          Ações
+        </th>
       </tr>
     </thead>
     <tbody>
       {#each tccs as tcc}
-        <tr class="border-t border-slate-200 hover:bg-slate-50 transition">
-          <td class="p-3 text-sm text-slate-800">{tcc.id}</td>
-          <td class="p-3 text-sm text-slate-800 font-medium">{tcc.titulo}</td>
-          <td class="p-3 text-sm text-slate-800">
+        <tr class="border-b border-slate-200 hover:bg-slate-50 text-slate-800">
+          <td class="px-6 py-4">{tcc.id}</td>
+          <td class="px-6 py-4 font-medium">{tcc.titulo}</td>
+          <td class="px-6 py-4">
             {tcc.aluno?.nome || tcc.aluno || "-"}
           </td>
-          <td class="p-3 text-sm text-slate-800">
+          <td class="px-6 py-4">
             {tcc.orientador?.nome || tcc.orientador || "-"}
           </td>
-          <td class="p-3">
+          <td class="px-6 py-4">
             <span
               class="px-2 py-1 rounded-full text-xs font-semibold {getStatusColor(tcc.status)}"
             >
               {getStatusLabel(tcc.status)}
             </span>
           </td>
-          <td class="p-3 text-sm text-slate-800">
+          <td class="px-6 py-4">
             {#if tcc.arquivo}
               <a
                 href={tcc.arquivo}
@@ -84,24 +98,26 @@
               -
             {/if}
           </td>
-          <td class="p-3 text-center">
-            <button
-              on:click={() => editar(tcc)}
-              class="text-blue-600 hover:text-blue-800 hover:underline mr-3 text-sm"
-            >
-              Editar
-            </button>
-            <button
-              on:click={() => excluir(tcc.id)}
-              class="text-red-600 hover:text-red-800 hover:underline text-sm"
-            >
-              Excluir
-            </button>
+          <td class="px-6 py-4">
+            <div class="flex justify-center gap-2">
+              <button
+                on:click={() => editar(tcc)}
+                class="px-3 py-2 bg-slate-200 text-slate-800 rounded-lg hover:bg-slate-300"
+              >
+                Editar
+              </button>
+              <button
+                on:click={() => excluir(tcc.id)}
+                class="px-3 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700"
+              >
+                Excluir
+              </button>
+            </div>
           </td>
         </tr>
       {:else}
         <tr>
-          <td colspan="7" class="p-6 text-center text-slate-500">
+          <td colspan="7" class="px-6 py-4 text-center text-slate-500">
             Nenhum TCC cadastrado.
           </td>
         </tr>
