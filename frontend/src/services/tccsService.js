@@ -11,12 +11,18 @@ export async function buscarTcc(id) {
 }
 
 export async function criarTcc(dados) {
-  const response = await api.post("/tccs/", dados);
+  // dados é um FormData
+  const response = await api.post("/tccs/", dados, {
+    headers: { "Content-Type": "multipart/form-data" },
+  });
   return response.data;
 }
 
 export async function atualizarTcc(id, dados) {
-  const response = await api.put(`/tccs/${id}/`, dados);
+  // dados é um FormData
+  const response = await api.put(`/tccs/${id}/`, dados, {
+    headers: { "Content-Type": "multipart/form-data" },
+  });
   return response.data;
 }
 
