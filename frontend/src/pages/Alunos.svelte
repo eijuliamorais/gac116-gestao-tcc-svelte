@@ -27,7 +27,6 @@
     }
   }
 
-  // Carrega ambos ao montar
   onMount(async () => {
     await Promise.all([carregarAlunos(), carregarCursos()]);
   });
@@ -52,7 +51,7 @@
       }
       modalAberto = false;
       alunoSelecionado = null;
-      await carregarAlunos(); // recarrega a lista
+      await carregarAlunos();
     } catch (error) {
       console.error("Erro ao salvar aluno:", error);
       alert("Erro ao salvar aluno. Verifique os dados e tente novamente.");
@@ -78,7 +77,6 @@
     alunoSelecionado = null;
   }
 
-  // Filtro por nome ou matrícula
   $: alunosFiltrados = alunos.filter(
     aluno =>
       aluno.nome.toLowerCase().includes(busca.toLowerCase()) ||
@@ -87,12 +85,8 @@
 </script>
 
 <div class="space-y-6">
-  <!-- Cabeçalho -->
-  <div class="flex justify-between items-center">
-    <div>
-      <h2 class="text-3xl font-bold text-slate-900">Alunos</h2>
-      <p class="text-slate-700">Gerenciamento de alunos</p>
-    </div>
+  <!-- Botão "Novo Aluno" (sem título/descrição duplicados) -->
+  <div class="flex justify-end">
     <button
       on:click={novoAluno}
       class="px-5 py-3 bg-slate-900 text-white rounded-xl hover:bg-slate-800 transition"

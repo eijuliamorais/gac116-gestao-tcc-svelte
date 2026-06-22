@@ -75,26 +75,36 @@
 </script>
 
 <div class="space-y-6">
-  <div class="flex justify-between items-center">
-    <div>
-      <h2 class="text-3xl font-bold text-slate-900">Departamentos</h2>
-      <p class="text-slate-700">Gerenciamento de departamentos</p>
-    </div>
-    <button on:click={novoDepartamento} class="px-5 py-3 bg-slate-900 text-white rounded-xl hover:bg-slate-800 transition">
+  <!-- Botão "Novo Departamento" (sem título/descrição duplicados) -->
+  <div class="flex justify-end">
+    <button
+      on:click={novoDepartamento}
+      class="px-5 py-3 bg-slate-900 text-white rounded-xl hover:bg-slate-800 transition"
+    >
       Novo Departamento
     </button>
   </div>
 
   <div class="card p-5">
-    <input bind:value={busca} type="text" placeholder="Pesquisar departamento por nome ou sigla..." class="w-full border border-slate-300 rounded-xl px-4 py-3" />
+    <input
+      bind:value={busca}
+      type="text"
+      placeholder="Pesquisar departamento por nome ou sigla..."
+      class="w-full border border-slate-300 rounded-xl px-4 py-3"
+    />
   </div>
 
-  <DepartamentosTable 
-    departamentos={departamentosFiltrados} 
-    {unidades} 
-    on:editar={editarDepartamento} 
-    on:excluir={removerDepartamento} 
+  <DepartamentosTable
+    departamentos={departamentosFiltrados}
+    {unidades}
+    on:editar={editarDepartamento}
+    on:excluir={removerDepartamento}
   />
 </div>
 
-<DepartamentoModal open={modalAberto} departamento={departamentoSelecionado} on:save={salvarDepartamento} on:close={fecharModal} />
+<DepartamentoModal
+  open={modalAberto}
+  departamento={departamentoSelecionado}
+  on:save={salvarDepartamento}
+  on:close={fecharModal}
+/>

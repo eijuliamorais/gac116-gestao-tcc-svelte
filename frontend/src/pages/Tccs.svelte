@@ -98,11 +98,8 @@
 </script>
 
 <div class="space-y-6">
-  <div class="flex justify-between items-center">
-    <div>
-      <h2 class="text-3xl font-bold text-slate-900">TCCs</h2>
-      <p class="text-slate-700">Gerenciamento de Trabalhos de Conclusão de Curso</p>
-    </div>
+  <!-- Botão "Novo TCC" (sem título/descrição duplicados) -->
+  <div class="flex justify-end">
     <button
       on:click={novoTcc}
       class="px-5 py-3 bg-slate-900 text-white rounded-xl hover:bg-slate-800 transition"
@@ -111,6 +108,7 @@
     </button>
   </div>
 
+  <!-- Busca -->
   <div class="card p-5">
     <input
       bind:value={busca}
@@ -120,6 +118,7 @@
     />
   </div>
 
+  <!-- Tabela -->
   <TccsTable
     tccs={tccsFiltrados}
     {alunos}
@@ -129,6 +128,7 @@
   />
 </div>
 
+<!-- Modal -->
 <TccModal
   open={modalAberto}
   tcc={tccSelecionado}

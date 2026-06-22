@@ -74,25 +74,38 @@
 </script>
 
 <div class="space-y-6">
-  <div class="flex justify-between items-center">
-    <div>
-      <h2 class="text-3xl font-bold text-slate-900">Cursos</h2>
-      <p class="text-slate-700">Gerenciamento de cursos</p>
-    </div>
-    <button on:click={novoCurso} class="px-5 py-3 bg-slate-900 text-white rounded-xl hover:bg-slate-800 transition">
+  <!-- Botão "Novo Curso" (sem título/descrição duplicados) -->
+  <div class="flex justify-end">
+    <button
+      on:click={novoCurso}
+      class="px-5 py-3 bg-slate-900 text-white rounded-xl hover:bg-slate-800 transition"
+    >
       Novo Curso
     </button>
   </div>
 
+  <!-- Busca -->
   <div class="card p-5">
-    <input bind:value={busca} type="text" placeholder="Pesquisar curso por nome, sigla ou código..." class="w-full border border-slate-300 rounded-xl px-4 py-3" />
+    <input
+      bind:value={busca}
+      type="text"
+      placeholder="Pesquisar curso por nome, sigla ou código..."
+      class="w-full border border-slate-300 rounded-xl px-4 py-3"
+    />
   </div>
 
-  <CursosTable 
-    cursos={cursosFiltrados} 
-    on:editar={editarCurso} 
-    on:excluir={removerCurso} 
+  <!-- Tabela -->
+  <CursosTable
+    cursos={cursosFiltrados}
+    on:editar={editarCurso}
+    on:excluir={removerCurso}
   />
 </div>
 
-<CursoModal open={modalAberto} curso={cursoSelecionado} on:save={salvarCurso} on:close={fecharModal} />
+<!-- Modal -->
+<CursoModal
+  open={modalAberto}
+  curso={cursoSelecionado}
+  on:save={salvarCurso}
+  on:close={fecharModal}
+/>
